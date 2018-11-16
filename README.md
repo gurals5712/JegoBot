@@ -14,4 +14,4 @@ JegoBot
 * Flask Framework
 * Json library
 * Datetime library
-
+> 기본 포트는 5000번 입니다.
