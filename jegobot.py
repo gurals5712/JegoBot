@@ -66,7 +66,7 @@ def Message():
     elif content == u"아침":
         meal_one = str(meal_menu['menu']['breakfast'])
         if meal_one == '[]' :
-            meal_one = "데이터 값이 없습니다."
+            meal_one = "아침이 없습니다."
             
         dataSend = {
             "message": {
@@ -82,7 +82,7 @@ def Message():
     elif content == u"점심":
         meal_two = str(meal_menu['menu']['lunch'])
         if meal_two == '[]' :
-            meal_two = "데이터 값이 없습니다."
+            meal_two = "점심이 없습니다."
         dataSend = {
             "message": {
                 "text": meal_two
@@ -97,7 +97,7 @@ def Message():
     elif content == u"저녁":
         meal_three = str(meal_menu['menu']['dinner'])
         if meal_three == '[]' :
-            meal_three = "데이터 값이 없습니다."
+            meal_three = "저녁이 없습니다."
         dataSend = {
             "message": {
                 "text": meal_three
@@ -126,5 +126,5 @@ def Message():
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port = 5000)
+    app.run(host='0.0.0.0', port = 8000)
 
