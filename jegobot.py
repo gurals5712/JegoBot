@@ -42,10 +42,11 @@ def Message():
     
     if content == u"오늘의급식":
 
-        #d = datetime.now(timezone('Asia/Seoul'))
-        #strday = str(d.day)
-        #response = requests.get('https://schoolmenukr.ml/api/middle/M100000191?hideAllergy=true&date=' + strday)
-        #meal_menu = json.loads(response.text)
+        global d, strday, response, meal_menu
+        d = datetime.now(timezone('Asia/Seoul'))
+        strday = str(d.day)
+        response = requests.get('https://schoolmenukr.ml/api/middle/M100000191?hideAllergy=true&date=' + strday)
+        meal_menu = json.loads(response.text)
         
         dataSend = {
             "message": {
@@ -76,12 +77,12 @@ def Message():
         meal_one = meal_menu['menu']['breakfast']
 
         if meal_one == '[]' :
-            meal_one = "아침이 없습니다."
-            
-        emote = random.choice(emote_list)
-        list_one = emote + '아침\n\n'
-        for one in meal_one:
-            list_one = list_one + '| ' + one + '\n'
+            list_one = "아침이 없습니다."
+        else:
+            emote = random.choice(emote_list)
+            list_one = emote + '아침\n\n'
+            for one in meal_one:
+                list_one = list_one + '| ' + one + '\n'
 
         dataSend = {
             "message": {
@@ -99,12 +100,12 @@ def Message():
         meal_two = meal_menu['menu']['lunch']
         
         if meal_two == '[]' :
-            meal_two = "점심이 없습니다."
-            
-        emote = random.choice(emote_list)
-        list_two = emote + '점심\n\n' 
-        for two in meal_two:
-            list_two = list_two + '| ' + two + '\n'
+            list_two = "점심이 없습니다."
+        else:
+            emote = random.choice(emote_list)
+            list_two = emote + '점심\n\n' 
+            for two in meal_two:
+                list_two = list_two + '| ' + two + '\n'
             
         dataSend = {
             "message": {
@@ -122,12 +123,12 @@ def Message():
         meal_three = meal_menu['menu']['dinner']
 
         if meal_three == '[]' :
-            meal_three = "저녁이 없습니다."
-
-        emote = random.choice(emote_list)
-        list_thr = emote + '저녁\n\n' 
-        for three in meal_three:
-            list_thr = list_thr + '| ' + three + '\n'
+            list_thr = "저녁이 없습니다."
+        else:
+            emote = random.choice(emote_list)
+            list_thr = emote + '저녁\n\n' 
+            for three in meal_three:
+                list_thr = list_thr + '| ' + three + '\n'
             
         dataSend = {
             "message": {
@@ -156,7 +157,6 @@ def Message():
         }
         
     return jsonify(dataSend)
-
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port = 8000)
