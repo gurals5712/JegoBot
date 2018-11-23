@@ -1,6 +1,4 @@
 beautifulsoup4==4.6.3
-pytest==4.0.0
-py==1.7.0
 jsonify==0.5
 bs4==0.0.1
 DateTime==4.3
