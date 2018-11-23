@@ -6,13 +6,7 @@ from pytz import timezone
 from datetime import datetime
 from flask import Flask, request, jsonify
 
-#급식파싱 API
-
-d = datetime.now(timezone('Asia/Seoul'))
-strday = str(d.day)
-response = requests.get('https://schoolmenukr.ml/api/middle/M100000191?hideAllergy=true&date=' + strday)
-meal_menu = json.loads(response.text)
-
+#이모트
 emote_list ='🌈', '😊', '☺️', '😄', '😃', '🤪', '🤩', '🤠', '🍗', '🍖', '🍔', '🍟', '🍕', '🥪', '🥙', '🌮', '🌯', '🥗', '🥘', '🥫', '🍝', '🍜', '🍲', '🍛', '🍣', '🍱', '🥟', '🍤', '🍙', '🍚', '🍘', '🍥', '🥠', '🍴', '🍽', '🥢'
 
 #테스트 코드
@@ -76,8 +70,8 @@ def Message():
 
         meal_one = meal_menu['menu']['breakfast']
 
-        if meal_one == '[]' :
-            list_one = "아침이 없습니다."
+        if not meal_one:
+            list_one = "아침이 존재하지 않습니다.🤔"
         else:
             emote = random.choice(emote_list)
             list_one = emote + '아침\n\n'
@@ -99,8 +93,8 @@ def Message():
 
         meal_two = meal_menu['menu']['lunch']
         
-        if meal_two == '[]' :
-            list_two = "점심이 없습니다."
+        if not meal_two:
+            list_two = "점심이 존재하지 않습니다.🤔"
         else:
             emote = random.choice(emote_list)
             list_two = emote + '점심\n\n' 
@@ -122,8 +116,8 @@ def Message():
 
         meal_three = meal_menu['menu']['dinner']
 
-        if meal_three == '[]' :
-            list_thr = "저녁이 없습니다."
+        if not meal_three:
+            list_thr = "저녁이 존재하지 않습니다.🤔"
         else:
             emote = random.choice(emote_list)
             list_thr = emote + '저녁\n\n' 
@@ -157,6 +151,7 @@ def Message():
         }
         
     return jsonify(dataSend)
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port = 8000)
