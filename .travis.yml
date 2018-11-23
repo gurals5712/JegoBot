@@ -1,0 +1,10 @@
+language: python
+python:
+  - "3.6"
+
+install:
+  - "pip install flask"
+  - "pip install jsonify"
+  - "pip install requests"
+  - "pip install DateTime"
+  - "pip install pytz"
