@@ -10,6 +10,21 @@ from flask import Flask, request, jsonify
 emote_list ='🌈', '😊', '☺️', '😄', '😃', '🤪', '🤩', '🤠', '🍗', '🍖', '🍔', '🍟', '🍕', '🥪', '🥙', '🌮', '🌯', '🥗', '🥘', '🥫', '🍝', '🍜', '🍲', '🍛', '🍣', '🍱', '🥟', '🍤', '🍙', '🍚', '🍘', '🍥', '🥠', '🍴', '🍽', '🥢'
 
 
+# 데이터 가져오기 
+#
+# 서버가 느려 매번 데이터를 가져오는것이 비효율적으로
+# 매일밤 00:00 에 Heroku Scheduler 을 이용하여 dynos 를 재시작 해줍니다.
+
+
+d = datetime.now(timezone('Asia/Seoul'))
+str_today = str(d.day)
+str_nxday = str(d.day + 1)
+td_response = requests.get('https://schoolmenukr.ml/api/middle/M100000191?hideAllergy=true&date=' + str_today)
+nx_response = requests.get('https://schoolmenukr.ml/api/middle/M100000191?hideAllergy=true&date=' + str_nxday)
+today_meal_menu = json.loads(td_response.text)
+nxday_meal_menu = json.loads(nx_response.text)
+        
+
 # 플라스크
 app = Flask(__name__)
 
@@ -33,17 +48,7 @@ def Message():
     dataReceive = request.get_json()
     content = dataReceive['content']
     
-    # 급식정보 버튼을 누르는 경우 서버에서 오늘,내일 급식 데이터를 가져옴
     if content == u"🌈급식정보":
-        
-        global d, str_today, str_nxday, td_response, nx_response, today_meal_menu, nxday_meal_menu
-        d = datetime.now(timezone('Asia/Seoul'))
-        str_today = str(d.day)
-        str_nxday = str(d.day + 1)
-        td_response = requests.get('https://schoolmenukr.ml/api/middle/M100000191?hideAllergy=true&date=' + str_today)
-        nx_response = requests.get('https://schoolmenukr.ml/api/middle/M100000191?hideAllergy=true&date=' + str_nxday)
-        today_meal_menu = json.loads(td_response.text)
-        nxday_meal_menu = json.loads(nx_response.text)
         
         dataSend = {
             "message": {
