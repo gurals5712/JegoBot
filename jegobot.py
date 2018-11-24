@@ -58,7 +58,7 @@ def Message():
         dataSend = {
             "message": {
                 "text": "아래에서 메뉴를 선택하세요"
-            },''
+            },
         "keyboard": {
             "type" : "buttons",
             "buttons" : ["오늘의급식", "도움말"]
