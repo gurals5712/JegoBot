@@ -173,7 +173,7 @@ def Message():
 
     elif content == u"🌈도움말":
 
-        infolist = "돈까스 맛없음", "플리또 짱", "짬타 각"
+        infolist = "돈까스 맛없음", "플리또 짱", "짬타 각" "현재버전 - V2.0"
         info = random.choice(infolist)
 
         dataSend = {
