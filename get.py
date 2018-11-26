@@ -1,10 +1,10 @@
 import json
 import time
-import schedule
+from apscheduler.schedulers.blocking import BlockingScheduler
+# import schedule
 import requests
 from pytz import timezone
 from datetime import datetime
-
 
 def parse():
     d = datetime.now(timezone('Asia/Seoul'))
@@ -21,8 +21,11 @@ def parse():
     with open('next.json', 'w', encoding="utf-8") as make_file:
         json.dump(nxday_meal_menu, make_file, ensure_ascii=False, indent="\t")
 
-schedule.every().day.at("00:00").do(parse)
+    print("Success To Get Meal Data")
+    print(today_meal_menu)
 
-while True:
-    schedule.run_pending() 
-    time.sleep(1)
+sched = BlockingScheduler()
+
+sched.add_job(parse, 'cron', hour='0', minute='0-30')
+
+sched.start()
