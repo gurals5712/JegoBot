@@ -9,6 +9,22 @@ from flask import Flask, request, jsonify
 # 이모트
 emote_list ='🌈', '😊', '☺️', '😄', '😃', '🤪', '🤩', '🤠', '🍗', '🍖', '🍔', '🍟', '🍕', '🥪', '🥙', '🌮', '🌯', '🥗', '🥘', '🥫', '🍝', '🍜', '🍲', '🍛', '🍣', '🍱', '🥟', '🍤', '🍙', '🍚', '🍘', '🍥', '🥠', '🍴', '🍽', '🥢'
 
+
+# 데이터 가져오기 
+#
+# 서버가 느려 매번 데이터를 가져오는것이 비효율적으로
+# 매일밤 00:00 에 Heroku Scheduler 을 이용하여 dynos 를 재시작 해줍니다.
+
+
+d = datetime.now(timezone('Asia/Seoul'))
+str_today = str(d.day)
+str_nxday = str(d.day + 1)
+td_response = requests.get('https://schoolmenukr.ml/api/middle/M100000191?hideAllergy=true&date=' + str_today)
+nx_response = requests.get('https://schoolmenukr.ml/api/middle/M100000191?hideAllergy=true&date=' + str_nxday)
+today_meal_menu = json.loads(td_response.text)
+nxday_meal_menu = json.loads(nx_response.text)
+        
+
 # 플라스크
 app = Flask(__name__)
 
@@ -31,10 +47,9 @@ def Message():
     
     dataReceive = request.get_json()
     content = dataReceive['content']
-
+    
     if content == u"🌈급식정보":
-
-
+        
         dataSend = {
             "message": {
                 "text": "시간대를 선택하세요"
@@ -60,18 +75,13 @@ def Message():
         
     elif content == u"오늘의급식":
 
-        with open('today.json') as today_data:  
-            today_meal_menu = json.load(today_data)
-
+        
         # 급식 데이터 가공
         meal_one = today_meal_menu['menu']['breakfast']
         meal_two = today_meal_menu['menu']['lunch']
         meal_three = today_meal_menu['menu']['dinner']
-        today = today_meal_menu['menu']['date']
-
-        today_info = "🌈" + today + "일 오늘의 급식 정보입니다\n\n"
-
-
+        
+        today_info = "🌈" + str_today + "일 오늘의 급식 정보입니다\n\n"
         # 급식 데이터가 없을경우
         if not meal_one:
             list_one = "🤔아침이 존재하지 않습니다.🤔\n"
@@ -83,7 +93,7 @@ def Message():
 
 
         if not meal_two:
-            list_two = "🤔점심이 존재하지 않습니다.🤔\n"
+            list_two = "🤔점심이 존재하지 않습니다.🤔\n\n"
         else:
             emote = random.choice(emote_list)
             list_two = emote + '점심\n\n' 
@@ -92,7 +102,7 @@ def Message():
 
 
         if not meal_three:
-            list_thr = "🤔저녁이 존재하지 않습니다.🤔\n"
+            list_thr = "🤔저녁이 존재하지 않습니다.🤔\n\n"
         else:
             emote = random.choice(emote_list)
             list_thr = emote + '저녁\n\n' 
@@ -115,19 +125,14 @@ def Message():
     
                 
     if content == u"내일의급식":
-        
-        with open('next.json') as nxday_data:  
-            nxday_meal_menu = json.load(nxday_data)
 
         # 급식 데이터 가공
         meal_one = nxday_meal_menu['menu']['breakfast']
         meal_two = nxday_meal_menu['menu']['lunch']
         meal_three = nxday_meal_menu['menu']['dinner']
-        nxday = nxday_meal_menu['menu']['date']
-
-        today_info = "🌈" + nxday + "일 내일의 급식 정보입니다\n\n"
         
-
+        today_info = "🌈" + str_nxday + "일 내일의 급식 정보입니다\n\n"
+        
         # 급식 데이터가 없을경우
         if not meal_one:
             list_one = "🤔아침이 존재하지 않습니다.🤔\n"
@@ -139,7 +144,7 @@ def Message():
 
 
         if not meal_two:
-            list_two = "🤔점심이 존재하지 않습니다.🤔\n"
+            list_two = "🤔점심이 존재하지 않습니다.🤔\n\n"
         else:
             emote = random.choice(emote_list)
             list_two = emote + '점심\n\n' 
@@ -148,7 +153,7 @@ def Message():
 
 
         if not meal_three:
-            list_thr = "🤔저녁이 존재하지 않습니다.🤔\n"
+            list_thr = "🤔저녁이 존재하지 않습니다.🤔\n\n"
         else:
             emote = random.choice(emote_list)
             list_thr = emote + '저녁\n\n' 
@@ -173,7 +178,7 @@ def Message():
 
     elif content == u"🌈도움말":
 
-        infolist = "돈까스 맛없음", "플리또 짱", "짬타 각", "현재버전 - V3.0"
+        infolist = "돈까스 맛없음", "플리또 짱", "짬타 각", "현재버전 - V2.0"
         info = random.choice(infolist)
 
         dataSend = {
@@ -187,6 +192,7 @@ def Message():
         }
         
     return jsonify(dataSend)
+
 
 
 if __name__ == "__main__":
