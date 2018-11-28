@@ -5,7 +5,7 @@ import random
 from apscheduler.schedulers.blocking import BlockingScheduler
 import requests
 from pytz import timezone
-from datetime import datetime
+import datetime
 from flask import Flask, request, jsonify
 
 # 이모트
@@ -15,13 +15,14 @@ emote_list ='🌈', '😊', '☺️', '😄', '😃', '🤪', '🤩', '🤠', '�
 # 급식 데이터를 불러옴
 def meal():
 
-    global d, str_today, str_nxday, today_meal_menu, nxday_meal_menu
+    global str_today, str_nxday, today_meal_menu, nxday_meal_menu
 
-    d = datetime.now(timezone('Asia/Seoul'))
-    str_today = str(d.day)
-    str_nxday = str(d.day + 1)
-    td_response = requests.get('https://schoolmenukr.ml/api/middle/M100000191?hideAllergy=true&date=' + str_today)
-    nx_response = requests.get('https://schoolmenukr.ml/api/middle/M100000191?hideAllergy=true&date=' + str_nxday)
+    now = datetime.datetime.now()
+    tomorrow = now + datetime.timedelta(days=1)
+    str_today = str(now.day)
+    str_nxday = str(tomorrow.day)
+    td_response = requests.get('https://schoolmenukr.ml/api/middle/M100000191?hideAllergy=true' + '&year=' + str(now.year) + '&month=' + str(now.month) +'&date=' + str(now.day))
+    nx_response = requests.get('https://schoolmenukr.ml/api/middle/M100000191?hideAllergy=true' + '&year=' + str(tomorrow.year) + '&month=' + str(tomorrow.month) +'&date=' + str(tomorrow.day))
     today_meal_menu = json.loads(td_response.text)
     nxday_meal_menu = json.loads(nx_response.text)
 
