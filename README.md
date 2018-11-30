@@ -22,13 +22,12 @@ JegoBot
 
 요구 사항
 -------------
-* python 3.6.5+
+* Python 3.5+
 * Flask Framework
 * Json library
-* Datetime library
+* Requests
+* Datetime
+* Pytz
+* APScheduler
 > 기본 포트는 8000번 입니다.
-
-실행 환경
--------------
-Heroku 인스턴스를 이용하여 동작합니다.
 
