@@ -1,1 +1,0 @@
-web: gunicorn jegobot:app

@@ -103,7 +103,7 @@ def flask_meal():
 
 
             if not meal_two:
-                list_two = "🤔점심이 존재하지 않습니다.🤔\n\n"
+                list_two = "🤔점심이 존재하지 않습니다.🤔\n"
             else:
                 emote = random.choice(emote_list)
                 list_two = emote + '점심\n\n' 
@@ -112,7 +112,7 @@ def flask_meal():
 
 
             if not meal_three:
-                list_thr = "🤔저녁이 존재하지 않습니다.🤔\n\n"
+                list_thr = "🤔저녁이 존재하지 않습니다.🤔\n"
             else:
                 emote = random.choice(emote_list)
                 list_thr = emote + '저녁\n\n' 
@@ -154,7 +154,7 @@ def flask_meal():
 
 
             if not meal_two:
-                list_two = "🤔점심이 존재하지 않습니다.🤔\n\n"
+                list_two = "🤔점심이 존재하지 않습니다.🤔\n"
             else:
                 emote = random.choice(emote_list)
                 list_two = emote + '점심\n\n' 
@@ -163,7 +163,7 @@ def flask_meal():
 
 
             if not meal_three:
-                list_thr = "🤔저녁이 존재하지 않습니다.🤔\n\n"
+                list_thr = "🤔저녁이 존재하지 않습니다.🤔\n"
             else:
                 emote = random.choice(emote_list)
                 list_thr = emote + '저녁\n\n' 
