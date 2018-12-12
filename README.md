@@ -1,6 +1,10 @@
 JegoBot
 =============
 
+
+![](https://img.shields.io/pypi/pyversions/Django.svg)
+
+
 개요
 -------------
 
