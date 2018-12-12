@@ -188,7 +188,7 @@ def flask_meal():
 
         elif content == u"🌈도움말":
 
-            infolist = "돈까스 맛없음", "플리또 짱", "짬타 각", "현재버전 - V2.0"
+            infolist = "돈까스 맛없음", "플리또 짱", "짬타 각", "현재버전 - V3.0"
             info = random.choice(infolist)
 
             dataSend = {
@@ -210,6 +210,7 @@ def flask_meal():
 
 
 sched = BlockingScheduler(timezone="Asia/Seoul")
+
 
 sched.add_job(meal, 'date')
 sched.add_job(meal, 'cron', hour='0', minute='0-2')
